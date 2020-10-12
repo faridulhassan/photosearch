@@ -1,0 +1,28 @@
+.App {
+}
+
+/* Photo List */
+.photolistContainer {
+}
+.photolist__item {
+  .photolist__item-inner {
+    overflow: hidden;
+    height: 160px;
+    position: relative;
+  }
+  &:hover {
+    img {
+      transform: scale(1.5);
+    }
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* position: absolute;
+    left: 50%;
+    top: 50%; */
+    transform: scale(1.25);
+    transition: all 0.5s;
+  }
+}
