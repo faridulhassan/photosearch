@@ -26,7 +26,9 @@ export default class App extends Component {
     this.handleSearch(this.state.searchText);
   }
   handleSearch(searchText) {
-    debugger;
+    /* if(this.state.searchText === searchText) {
+      return;
+    } */
     this.setState({ loading: true }, function () {
       this.setState({ searchText: searchText, xloading: true }, function () {
         let URL =

@@ -18,24 +18,29 @@ function Searchbar(props) {
           <h1 className="">Simple Photo Search App with React.js</h1>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <form onSubmit={handleSearch(searchText, props.handleSearch)} style={{display: 'flex'}}>
-            <TextField
-              label="Search"
-              // size="small"
-              variant="outlined"
-              defaultValue={searchText}
-              onChange={(e) => {
-                setSearchText(e.target.value);
-              }}
-              autoFocus={true}
-              fullWidth={true}
-            />
-            {/* <Button
-              variant="contained"
-              color="primary"
-              endIcon={<SearchIcon style={{margin:0}}/>}
-            >
-            </Button> */}
+          <form
+            onSubmit={handleSearch(searchText, props.handleSearch)}
+            xstyle={{ display: "flex" }}
+          >
+            <div className="search-with-btn-wrapper">
+              <TextField
+                label="Search"
+                // size="small"
+                variant="outlined"
+                defaultValue={searchText}
+                onChange={(e) => {
+                  setSearchText(e.target.value);
+                }}
+                autoFocus={true}
+                fullWidth={true}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit" 
+                endIcon={<SearchIcon style={{ margin: 0 }} />}
+              ></Button>
+            </div>
           </form>
         </Grid>
       </Grid>
