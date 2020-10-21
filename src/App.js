@@ -3,6 +3,8 @@ import axios from "axios";
 
 import Container from "@material-ui/core/Container";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Backdrop from "@material-ui/core/Backdrop";
+
 import Pagination from "@material-ui/lab/Pagination";
 
 // import Snackbar from '@material-ui/core/Snackbar';
@@ -13,7 +15,6 @@ import "./App.scss";
 /* some variables/constant */
 const API_KEY = "3919009-79d0eb98510653e58766e4260";
 const PER_PAGE = 50;
-
 
 export default class App extends Component {
   constructor(props) {
@@ -27,12 +28,12 @@ export default class App extends Component {
       pagination: {
         size: PER_PAGE,
         total: 1,
-        page: 1
+        page: 1,
       },
       query: {
         per_page: PER_PAGE,
-        page: 1
-      }
+        page: 1,
+      },
     };
     this.handleSearch = this.handleSearch.bind(this);
   }
@@ -49,16 +50,18 @@ export default class App extends Component {
           "https://pixabay.com/api/?key=" +
           API_KEY +
           "&q=" +
-          encodeURIComponent(this.state.searchText) + 
-          "&per_page=" + this.state.query.per_page + 
-          "&page=" + this.state.query.page;
+          encodeURIComponent(this.state.searchText) +
+          "&per_page=" +
+          this.state.query.per_page +
+          "&page=" +
+          this.state.query.page;
         axios.get(URL).then((photos) => {
-          console.log('hello', this);
+          console.log("hello", this);
           // debugger;
           console.log(photos.data.hits);
           console.log(photos.data.total);
           // debugger;
-          document.body.scrollIntoView({behavior: 'smooth', block: 'start'});
+          document.body.scrollIntoView({ behavior: "smooth", block: "start" });
           this.setState({
             photos: photos.data.hits,
             pagination: { ...this.state.pagination, total: photos.data.total },
@@ -77,20 +80,13 @@ export default class App extends Component {
             handleSearch={this.handleSearch}
             value={this.state.searchText}
           />
-          <div
-            className=""
-            style={{
-              textAlign: "center",
-              marginBottom: 20,
-              display: this.state.loading ? "block" : "none",
-            }}
+
+          <Backdrop
+            open={this.state.loading}
+            style={{ zIndex: 10000, color: "white" }}
           >
-            <CircularProgress
-              style={{
-                display: "inline-block",
-              }}
-            />
-          </div>
+            <CircularProgress color="inherit" />
+          </Backdrop>
           <PhotoList
             photos={this.state.photos}
             style={{
@@ -107,14 +103,17 @@ export default class App extends Component {
               justifyContent: "center",
               margin: "20px 0",
             }}
-            onChange={(evt, page)=> {
+            onChange={(evt, page) => {
               console.log(this);
-              this.setState({
-                pagination: { ...this.state.pagination, page },
-                query: { ...this.state.query, page },
-              }, function() {
-                this.handleSearch(this.state.searchText);
-              });
+              this.setState(
+                {
+                  pagination: { ...this.state.pagination, page },
+                  query: { ...this.state.query, page },
+                },
+                function () {
+                  this.handleSearch(this.state.searchText);
+                }
+              );
               console.log(evt);
               console.log(page);
             }}
