@@ -56,15 +56,10 @@ export default class App extends Component {
           "&page=" +
           this.state.query.page;
         axios.get(URL).then((photos) => {
-          console.log("hello", this);
-          // debugger;
-          console.log(photos.data.hits);
-          console.log(photos.data.total);
-          // debugger;
           document.body.scrollIntoView({ behavior: "smooth", block: "start" });
           this.setState({
             photos: photos.data.hits,
-            pagination: { ...this.state.pagination, total: photos.data.total },
+            pagination: { ...this.state.pagination, total: photos.data.totalHits },
             loading: false,
           });
         });
