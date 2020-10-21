@@ -5,6 +5,8 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import Avatar from '@material-ui/core/Avatar';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,24 +42,26 @@ function PhotoList(props) {
             className="photolist__item"
           >
             <div className="photolist__item-inner">
-              <a href={`https://pixabay.com/users/${photo.user}`} target="_blank" className="photolist__item-user">
-                <Avatar alt={photo.user} src={photo.userImageURL} />
-              </a>
+              <Tooltip title={photo.user} placement="left" arrow={true}>
+                <a href={`https://pixabay.com/users/${photo.user}`} target="_blank" className="photolist__item-user">
+                  <Avatar alt={photo.user} src={photo.userImageURL} />
+                </a>
+              </Tooltip>
               <img
-                src={photo.largeImageURL} //largeImageURL //previewURL
+                src={photo.webformatURL} //[previewURL, webformatURL, largeImageURL]
                 alt=""
                 className="photolist__image"
               />
               <div className="photolist__item-metainfo">
                 <ul className="photolist__item-count">
                   <li>
-                    <ThumbUpAltIcon /> <span>{photo.likes}</span>
+                    <Tooltip title="Likes" arrow={true} xplacement="top"><div><ThumbUpAltIcon /><span>{photo.likes}</span></div></Tooltip>
                   </li>
                   <li>
-                    <StarBorderIcon /> <span>{photo.favorites}</span>
+                    <Tooltip title="Favorites" arrow={true} xplacement="top"><div><StarBorderIcon /><span>{photo.favorites}</span></div></Tooltip>
                   </li>
                   <li>
-                    <GetAppIcon /> <span>{photo.downloads}</span>
+                    <Tooltip title="Downloads" arrow={true} xplacement="top"><div><GetAppIcon /><span>{photo.downloads}</span></div></Tooltip>
                   </li>
                 </ul>
                 <ul className="photolist__item-tags">
