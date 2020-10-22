@@ -35,15 +35,18 @@ export default class App extends Component {
         page: 1,
       },
     };
-    this.handleSearch = this.handleSearch.bind(this);
   }
   componentDidMount() {
     this.handleSearch(this.state.searchText);
   }
-  handleSearch(searchText) {
-    /* if(this.state.searchText === searchText) {
-      return;
-    } */
+  handleSearch = (searchText) => {
+    searchText = (searchText || "").trim();
+    if (this.state.searchText != searchText) {
+      this.setState({
+        pagination: { ...this.state.pagination, page: 1 },
+        query: { ...this.state.query, page: 1 },
+      });
+    }
     this.setState({ loading: true }, function () {
       this.setState({ searchText: searchText, xloading: true }, function () {
         let URL =
@@ -57,15 +60,20 @@ export default class App extends Component {
           this.state.query.page;
         axios.get(URL).then((photos) => {
           document.body.scrollIntoView({ behavior: "smooth", block: "start" });
+          console.log(this);
           this.setState({
             photos: photos.data.hits,
-            pagination: { ...this.state.pagination, total: photos.data.totalHits },
-            loading: false,
+            pagination: {
+              ...this.state.pagination,
+              total: photos.data.totalHits,
+            },
+            // loading: false,
           });
+          setTimeout(() => this.setState({ loading: false }), 800);
         });
       });
     });
-  }
+  };
   render() {
     return (
       <div className="App">
@@ -92,6 +100,7 @@ export default class App extends Component {
             count={Math.ceil(
               this.state.pagination.total / this.state.pagination.size
             )}
+            page={this.state.pagination.page}
             color="primary"
             style={{
               display: this.state.photos.length ? "flex" : "none",
@@ -99,7 +108,6 @@ export default class App extends Component {
               margin: "20px 0",
             }}
             onChange={(evt, page) => {
-              console.log(this);
               this.setState(
                 {
                   pagination: { ...this.state.pagination, page },
@@ -109,8 +117,6 @@ export default class App extends Component {
                   this.handleSearch(this.state.searchText);
                 }
               );
-              console.log(evt);
-              console.log(page);
             }}
           />
         </Container>

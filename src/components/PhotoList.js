@@ -48,7 +48,7 @@ function PhotoList(props) {
                 </a>
               </Tooltip>
               <img
-                src={photo.largeImageURL} //[previewURL, webformatURL, largeImageURL]
+                src={photo.webformatURL} //[previewURL, webformatURL, largeImageURL]
                 alt=""
                 className="photolist__image"
               />
